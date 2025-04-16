@@ -11,14 +11,24 @@ class SearchQuotesUseCase @Inject constructor() {
 
     operator fun invoke(quotes: List<QuoteModel>, query: String): Flow<Uistate<List<QuoteModel>>> = flow {
         emit(Uistate.LOADING)
-        if (quotes.isEmpty()){
-            emit(Uistate.ERROR(Exception("List is empty")))
+
+
+        if (quotes.isEmpty()) {
+            emit(Uistate.ERROR(Exception("Quotes list is empty")))
+            return@flow
         }
-        quotes.filter {
-            it.author == query
-        }.also {
-            emit(Uistate.SUCCESS(it))
+
+
+        val lowercaseQuery = query.trim().lowercase()
+
+        val filteredQuotes = quotes.filter {
+            it.author?.trim()?.lowercase()?.contains(lowercaseQuery) == true
+        }
+
+        if (filteredQuotes.isNotEmpty()) {
+            emit(Uistate.SUCCESS(filteredQuotes))
+        } else {
+            emit(Uistate.ERROR(Exception("No quotes found matching the query")))
         }
     }
-
 }
