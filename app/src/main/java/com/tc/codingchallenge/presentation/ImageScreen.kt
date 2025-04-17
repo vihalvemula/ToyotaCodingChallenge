@@ -12,9 +12,7 @@ fun ImageScreen(modifier: Modifier = Modifier) {
 
     Box(modifier = modifier) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data("https://cdn.britannica.com/52/4652-050-9321DACE/Texas-political-map-county-boundaries-cities.jpg")
-                .build(),
+            model="https://cdn.britannica.com/52/4652-050-9321DACE/Texas-political-map-county-boundaries-cities.jpg",
             contentDescription = "Image"
         )
     }
